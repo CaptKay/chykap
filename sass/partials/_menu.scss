@@ -1,0 +1,205 @@
+header{
+    width: 100%;
+    nav{
+        background-color: darken($primary-color, 10%);
+        width: 100%;
+
+        .nav-primary{
+            display: grid;
+            grid-template-columns: repeat(2, auto);
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1rem;
+
+            img{
+                width: 2rem;
+                height: 2rem;
+            }
+
+            .display-picture{
+                animation: roll 3s infinite;
+                transform: rotate(30deg);
+                @include easeOut; 
+            }
+            
+            .company-logo{
+                border-radius: .1rem;
+                width: 3rem;
+                height: 2.4rem;
+                
+            }
+
+            @keyframes roll {
+                0% {
+                  transform: rotate(0);
+                }
+                100% {
+                  transform: rotate(360deg);
+                }
+              }
+           
+        }
+
+        .nav-secondary{
+            position: relative;
+            display: grid;
+            grid-template-columns: auto 2rem;
+            background-color: darken($white-color, 0);
+            padding: .4rem 1rem;
+            border-bottom: .01rem solid darken($white-color, 20);
+            grid-gap: 1rem;
+
+            h1{
+                font-size: 1rem;
+                text-align: center;
+                font-weight: bolder;
+                letter-spacing: .1rem;
+                font-family: fantasy;
+                padding: .1rem;
+                color: darken($primary-color, 20);
+            }
+
+            .menu-btn{
+            display: flex;
+            flex-direction: column;
+            z-index: 3;
+            padding-top: .2rem;
+            cursor: pointer;
+            @include easeOut;
+
+            .btn-line{
+                width: 1.5rem;
+                height: .07rem;
+                margin-top: .28rem;
+                background-color: darken($white-color, 90);
+                @include easeOut;
+            }
+
+            //Rotate menu line into X
+            &.close{
+                transform: rotate(180deg);
+                padding-left: .9rem;
+                
+
+                .btn-line{
+                    //Line 1 - Rotate
+                    &:nth-child(1){
+                        transform: rotate(45deg) translate(.1rem, .4rem);
+                        background-color: darken($white-color, 5);
+                    }
+
+                    //Line 2 - Hide
+                    &:nth-child(2){
+                        opacity: 0;
+                    }
+
+                    //Line 3 - Rotate
+                    &:nth-child(3){
+                        transform: rotate(-45deg) translate(.15rem, -.5rem);
+                        background-color: darken($white-color, 5);
+                    }
+                }
+            } 
+            }
+        }
+       
+    }
+
+    //Menu Overlay
+    .menu{
+        position: fixed;
+        top: 0;
+        width: 100%;
+        opacity: .9;
+        visibility: hidden;
+        
+        &.show{
+            visibility: visible;
+            
+        }
+
+        &-branding, 
+        &-nav{
+            display: grid;
+            grid-template-columns: auto;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+
+            &.show{
+                transform: translate3d(0, 0, 0);
+            }
+        }
+
+        &-nav{
+            margin: 0;
+            padding: 0;
+            height: 70vh;
+            text-align: center;
+            background: darken($primary-color, 5);
+            transform: translate3d(100%, 0, 0);
+            @include easeOut;   
+        }
+
+        //Branding Side
+        &-branding{
+            background: $primary-color;
+            height: 30vh;
+            transform: translate3d(-100%, 0, 0);
+            @include easeOut;
+
+            .large-company-logo{
+                margin: 0 auto;
+                
+                img{
+                    width: 8rem;
+                    height: 8rem;
+                    border-radius: 50%;
+                    border: .3rem solid lighten($primary-color, 20);
+                }
+            }
+        }
+
+        //Menu Nav Side
+        .nav-item{
+            transform: translate3d(50rem, 0, 0);
+            z-index: 3;
+            @include easeOut;
+
+            &.show{
+                transform: translate3d(0, 0, 0);
+            }
+
+            &.current > a{
+                color: lighten($primary-color, 40);
+            }
+
+            
+        }
+
+        .nav-link{
+            display: inline-block;
+            position: relative;
+            font-size: 1.2rem;
+            font-weight: 300;
+            text-transform: uppercase;
+            padding: .1rem 0;
+            @include easeOut;
+
+            &:hover {
+                color: lighten($primary-color, 20);
+            }
+
+            
+        }
+    
+    }
+    //Delay each nav item by .1s
+    @for $x from 1 through 6 {
+        .nav-item:nth-child(#{$x}) {
+            transition-delay: $x * .1s;
+        }
+    }
+}
